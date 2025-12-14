@@ -1,3 +1,5 @@
+using System;
+
 namespace HabitTrackerApp
 {
     public class Habit
@@ -6,30 +8,30 @@ namespace HabitTrackerApp
         public int WeeklyTarget { get; private set; }
         public int TimesCompletedThisWeek { get; private set; }
 
+        private StreakManager _streakManager;
+
         public Habit(string name, int weeklyTarget)
         {
-            Name= name;
-            WeeklyTarget =weeklyTarget;
+            Name = name;
+            WeeklyTarget = weeklyTarget;
             TimesCompletedThisWeek = 0;
+            _streakManager = new StreakManager();
         }
+
         public void AddCompletion()
         {
             TimesCompletedThisWeek++;
-        }
-
-        public void ResetWeek()
-        {
-            TimesCompletedThisWeek = 0;
+            _streakManager.RegisterCompletion(DateTime.Now);
         }
 
         public string GetProgress()
         {
-            return $"{TimesCompletedThisWeek}/{WeeklyTarget} completions this week";
+            return $"{TimesCompletedThisWeek}/{WeeklyTarget}";
         }
 
         public override string ToString()
         {
-            return $"{Name}(Target: {WeeklyTarget} per week) - {GetProgress()}";
+            return $"{Name} | Weekly: {GetProgress()} | Streak: {_streakManager.CurrentStreak} | Best: {_streakManager.LongestStreak}";
         }
     }
 }

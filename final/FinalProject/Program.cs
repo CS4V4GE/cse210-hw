@@ -24,7 +24,7 @@ namespace HabitTrackerApp
                 exitRequested = tracker.HandleCommand(input);
             }
 
-            Console.WriteLine("Goodbye! Stay strong and don't forget your goal!");
+            Console.WriteLine("Goodbye!");
         }
     }
 }
